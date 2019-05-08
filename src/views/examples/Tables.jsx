@@ -30,10 +30,13 @@ class Tables extends React.Component {
     users: []
   }
 
-  async componentDidMount() {
+  async retrieveUsers() {
     const users = await fetch(`${API_URL}/users`).then(r => r.json());
-    console.log(users);
     this.setState({ users });
+  }
+
+  componentDidMount() {
+    this.retrieveUsers();
   }
 
   render() {
@@ -58,6 +61,7 @@ class Tables extends React.Component {
                       <th scope="col">Name</th>
                       <th scope="col">Is Merchant</th>
                       <th scope="col">Balance</th>
+                      <th scope="col" />
                     </tr>
                   </thead>
                   <tbody>
@@ -68,6 +72,35 @@ class Tables extends React.Component {
                         <td>{user.name}</td>
                         <td>{user.is_merchant ? "Yes" : "No"}</td>
                         <td>{Math.round(user.stellar)} BLC</td>
+                        <td className="text-right">
+                          {!user.is_merchant ?
+                            <UncontrolledDropdown>
+                              <DropdownToggle
+                                className="btn-icon-only text-light"
+                                href="#pablo"
+                                role="button"
+                                size="sm"
+                                color=""
+                                onClick={e => e.preventDefault()}
+                              >
+                                <i className="fas fa-ellipsis-v" />
+                              </DropdownToggle>
+                              <DropdownMenu className="dropdown-menu-arrow" right>
+                                <DropdownItem
+                                  href="#pablo"
+                                  onClick={async e => {
+                                    e.preventDefault();
+                                    await fetch(`https://stellar.altugankarali.com/promote-merchant?id=${user.id}&is_merchant=true`).then(r => r.json());
+                                    this.retrieveUsers();
+                                  }}
+                                >
+                                  Promote
+                          </DropdownItem>
+                              </DropdownMenu>
+                            </UncontrolledDropdown>
+                            : ""
+                          }
+                        </td>
                       </tr>
                     ))}
                   </tbody>
