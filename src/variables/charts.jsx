@@ -328,7 +328,7 @@ let chartExample1 = {
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+          data: [0, 20, 20, 25, 26, 27, 28, 40, 50]
         }
       ]
     };
@@ -339,7 +339,7 @@ let chartExample1 = {
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 5, 25, 10, 30, 15, 40, 40]
+          data: [0, 8, 6, 10, 9, 16, 27, 19, 30]
         }
       ]
     };
