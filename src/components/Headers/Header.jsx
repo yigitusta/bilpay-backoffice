@@ -1,0 +1,163 @@
+import React from "react";
+
+// reactstrap components
+import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+
+import { ALTUG_API_URL } from "../../config";
+
+class Header extends React.Component {
+  state = {
+    avg_response_time: null,
+    all_users: null,
+    total_transaction_amount: null,
+    transaction_count: null
+  }
+  async componentDidMount() {
+    const analytics = await fetch(`${ALTUG_API_URL}/api/analytics`, {
+      headers: new Headers({
+        "Authorization": `Bearer ${localStorage.getItem("api_token")}`
+      })
+    }).then(r => r.json());
+    this.setState({
+      avg_response_time: analytics.average_response_time[0].time,
+      all_users: analytics.registered_users,
+      total_transaction_amount: analytics.total_transaction_amount,
+      transaction_count: analytics.transaction_count
+
+    });
+  }
+  render() {
+    return (
+      <>
+        <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+          <Container fluid>
+            <div className="header-body">
+              {/* Card stats */}
+              <Row>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Average Response Time
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">
+                            {this.state.avg_response_time}s
+                          </span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i className="fas fa-chart-bar" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-success mr-2">
+                          <i className="fa fa-arrow-up" /> 3.48%
+                        </span>{" "}
+                        <span className="text-nowrap">Since last month</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            All users
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">
+                            {this.state.all_users}
+                          </span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                            <i className="fas fa-chart-pie" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-danger mr-2">
+                          <i className="fas fa-arrow-down" /> 3.48%
+                        </span>{" "}
+                        <span className="text-nowrap">Since last week</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Transaction Count
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">{this.state.transaction_count}</span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                            <i className="fas fa-users" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-warning mr-2">
+                          <i className="fas fa-arrow-down" /> 1.10%
+                        </span>{" "}
+                        <span className="text-nowrap">Since yesterday</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Total Transaction Amount
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">{this.state.total_transaction_amount} BLC
+                          </span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                            <i className="fas fa-percent" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-success mr-2">
+                          <i className="fas fa-arrow-up" /> 12%
+                        </span>{" "}
+                        <span className="text-nowrap">Since last month</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </div>
+      </>
+    );
+  }
+}
+
+export default Header;
