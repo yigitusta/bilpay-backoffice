@@ -71,6 +71,7 @@ class Purchases extends React.Component {
                         <td>{purchase.amount} BLC</td>
                         <td>{purchase.status}</td>
                         <td className="text-right">
+                        {purchase.status !== "paid" ?
                           <UncontrolledDropdown>
                             <DropdownToggle
                               className="btn-icon-only text-light"
@@ -95,6 +96,8 @@ class Purchases extends React.Component {
                             </DropdownItem>
                             </DropdownMenu>
                           </UncontrolledDropdown>
+                          : ""
+                        }
                         </td>
                       </tr>
                     ))}

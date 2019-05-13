@@ -75,6 +75,7 @@ class Cashouts extends React.Component {
                         <td>{cashout.amount} BLC</td>
                         <td>{cashout.status}</td>
                         <td className="text-right">
+                        {cashout.status !== "paid" ?
                           <UncontrolledDropdown>
                             <DropdownToggle
                               className="btn-icon-only text-light"
@@ -99,6 +100,8 @@ class Cashouts extends React.Component {
                             </DropdownItem>
                             </DropdownMenu>
                           </UncontrolledDropdown>
+                          : ""
+                        }
                         </td>
                       </tr>
                     ))}
